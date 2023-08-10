@@ -23,7 +23,7 @@ To set up your own project you can follow these steps.
 
 ## Setup Account on Stripe
 
-1. Go to [Stripe](https://stripe.com/) and setup an account with you email address (You do not need a credit card or anything as you can just stay in 'test mode').
+1. Go to [Stripe](https://stripe.com/) and setup an account with your email address (You do not need a credit card or anything as you can just stay in 'test mode').
 2. Copy your secret key from the 'Developers' Tab and put it into a '.env' file in your repos root directory.
 3. Add some products using the 'Products' tab (we will use the API to fetch these for our page).
 
