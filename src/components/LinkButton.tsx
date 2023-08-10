@@ -2,8 +2,8 @@ export default function LinkButton({
     link,
     text,
 }: {
-    link: string
-    text: string
+    link: string;
+    text: string;
 }) {
     return (
         <a
@@ -19,5 +19,5 @@ export default function LinkButton({
                 </span>
             </h2>
         </a>
-    )
+    );
 }

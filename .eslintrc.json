@@ -11,7 +11,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "plugins": ["prettier", "react"],
-    "ignorePatterns": ["*.ttf", "*.css"],
+    "ignorePatterns": ["*.ttf", "*.css", "!.*"],
     "rules": {
         "@next/next/no-img-element": "off",
         "import/no-extraneous-dependencies": "off",
