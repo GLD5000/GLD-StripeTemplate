@@ -13,7 +13,7 @@
 
 # Setup Stripe with Next 13.4
 
-To set up your own project you can follow these steps.
+To set up or better understand the project you can read on!
 
 ## Installation
 
@@ -91,7 +91,9 @@ export async function POST(request: NextRequest) {
 
 ```
 
-### The fetch will be enabled by a useEffect on page load:
+## Integrate getproducts (AKA fetch) API route
+
+### The fetch is be enabled by a useEffect on page / site load:
 
 ```
     useEffect(() => {
@@ -99,7 +101,7 @@ export async function POST(request: NextRequest) {
     }, []);
 ```
 
-### The fetchProducts function will get an array of products and set the local state to the result:
+### The fetchProducts function gets an array of products and sets the component state to the result:
 
 ```
     async function fetchProducts() {
@@ -109,7 +111,7 @@ export async function POST(request: NextRequest) {
 
 ```
 
-### Map over the returned array, sending each product to a product card:
+### We map over the returned array, sending each product to a product card:
 
 ```
     function getProductCards(productData: Product[]) {
@@ -119,7 +121,7 @@ export async function POST(request: NextRequest) {
     }
 ```
 
-### Then return the product card array to the page:
+### Then we return the product card array to the page:
 
 ```
    return (
@@ -129,7 +131,7 @@ export async function POST(request: NextRequest) {
     );
 ```
 
-### I chose to put these parts together in a 'ProductCards.tsx':
+### I put these parts together in a 'ProductCards.tsx':
 
 ```
 'use client';
@@ -165,4 +167,100 @@ export default function ProductCards() {
 }
 
 
+```
+
+## Integrate the checkout API Route
+
+### In the product card, there is a button for buying a product:
+
+```
+  <Button onClick={handleClickBuy}>Buy Now</Button>
+
+```
+
+### This button has a click handler which makes the API request and gives control of the window location to the Stripe checkout returned:
+
+```
+    async function handleClickBuy(e: SyntheticEvent) {
+        e.preventDefault();
+        const { data: checkout } = await axios.post(
+            '/api/checkout',
+            {
+                priceId: id,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        window.location.assign(checkout);
+    }
+
+```
+
+### I put these in a ProductCard.tsx component:
+
+```
+import Image from 'next/image';
+import axios from 'axios';
+import { SyntheticEvent } from 'react';
+import { Price, Product } from '@/lib/stripe/types';
+import { Button } from '../ui/button';
+
+export default function ProductCard({ data }: { data: Product }) {
+    const {
+        name,
+        description,
+        images: [image],
+        default_price: price,
+    } = data;
+    const { currency, unit_amount: amount, id } = price as Price;
+    if (!name || !description || !image) return null;
+    return (
+        <div className="grid gap-4 border rounded shadow p-6 lg:max-w-[35rem]">
+            <Image
+                priority
+                src={image}
+                alt={description}
+                width={806}
+                height={671}
+            />
+            <h2 className="text-6xl font-bold mx-auto w-fit">{name}</h2>
+            <p className="mx-auto">{description}</p>
+            <b className="mx-auto">{`${
+                amount ? amount * 0.01 : 'N/A'
+            } ${currency}`}</b>
+            <Button onClick={handleClickBuy}>Buy Now</Button>
+        </div>
+    );
+
+    async function handleClickBuy(e: SyntheticEvent) {
+        e.preventDefault();
+        const { data: checkout } = await axios.post(
+            '/api/checkout',
+            {
+                priceId: id,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        window.location.assign(checkout);
+    }
+}
+
+```
+
+## On Types
+
+### I also decided to destructure the type definitions for 'Product' and 'Price' and export them from my own module so I did not need to keep importing the stripe module and using dot notation to access them (lib/stripe/types.ts):
+
+```
+import Stripe from 'stripe';
+
+export type Product = Stripe.Product;
+export type Price = Stripe.Price;
 ```
