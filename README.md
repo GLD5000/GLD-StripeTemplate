@@ -13,9 +13,7 @@
 
 # Setup Stripe with Next 13.4
 
-## How I set up a project
-
-> #### TLDR: This setup is available as a template in my [GitHub Account](https://github.com/GLD5000) if you want the quickest path to the end result or want to see the setup in context- [GLD-NextTemplate](https://github.com/GLD5000/GLD-NextTemplate)
+To set up your own project you can follow these steps.
 
 ## Installation
 
@@ -28,3 +26,86 @@
 1. Go to [Stripe](https://stripe.com/) and setup an account with you email address (You do not need a credit card or anything as you can just stay in 'test mode').
 2. Copy your secret key from the 'Developers' Tab and put it into a '.env' file in your repos root directory.
 3. Add some products using the 'Products' tab (we will use the API to fetch these for our page).
+
+## Create API route handlers
+
+You will need two handlers:
+
+1. To fetch products from your Stripe account
+2. To enable checkout for a desired product
+
+### The fetch will be enabled by a useEffect on page load:
+
+```
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+```
+
+### The fetchProducts function will get an array of products and set the local state to the result:
+
+```
+    async function fetchProducts() {
+        const { data } = await axios.get('/api/getproducts');
+        setProducts(data);
+    }
+
+```
+
+### Map over the returned array, sending each product to a product card:
+
+```
+    function getProductCards(productData: Product[]) {
+        return productData.map((data) => (
+            <ProductCard key={data.id} data={data} />
+        ));
+    }
+```
+
+### Then return the product card array to the page:
+
+```
+   return (
+        <div className="grid sm:grid-cols-2 gap-16">
+            {getProductCards(products)}
+        </div>
+    );
+```
+
+### I chose to put these parts together in a 'ProductCards.tsx':
+
+```
+'use client';
+
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { Product } from '@/lib/stripe/types';
+import ProductCard from './ProductCard';
+
+export default function ProductCards() {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    return (
+        <div className="grid sm:grid-cols-2 gap-16">
+            {getProductCards(products)}
+        </div>
+    );
+
+    async function fetchProducts() {
+        const { data } = await axios.get('/api/getproducts');
+        setProducts(data);
+    }
+
+    function getProductCards(productData: Product[]) {
+        return productData.map((data) => (
+            <ProductCard key={data.id} data={data} />
+        ));
+    }
+}
+
+
+```
