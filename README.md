@@ -23,4 +23,8 @@
 2. If starting with the [GLD-NextTemplate](https://github.com/GLD5000/GLD-NextTemplate), run `npm i` to set up dependencies etc.
 3. Run `npm i stripe axios` to install stripe and axios (You can also just use the native Fetch API if you like).
 
-inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300 bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 h-10 px-4 py-2
+## Setup Account on Stripe
+
+1. Go to [Stripe](https://stripe.com/) and setup an account with you email address (You do not need a credit card or anything as you can just stay in 'test mode').
+2. Copy your secret key from the 'Developers' Tab and put it into a '.env' file in your repos root directory.
+3. Add some products using the 'Products' tab (we will use the API to fetch these for our page).
