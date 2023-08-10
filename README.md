@@ -1,4 +1,4 @@
-# This is a [Next.js](https://nextjs.org/) project with:
+# This is a [Next.js](https://nextjs.org/) project with [Stripe Payment GateWay](https://support.stripe.com/topics/getting-started):
 
 1. [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) for type safety
 2. [Tailwind CSS](https://tailwindcss.com/docs/installation) for styling
@@ -9,9 +9,9 @@
 
 ## If you like this, checkout my other projects on [GitHub](https://github.com/GLD5000) or via my [Portfolio](https://gld-portfolio.vercel.app/)
 
-## How I made this (also read on [my blog](https://gld-dev-blog.vercel.app/blogpost/clky99brt0000mi0851uxf2dm) or [dev.to](https://dev.to/gld5000)):
+## How I made this (also read on [my blog](https://gld-dev-blog.vercel.app/) or [dev.to](https://dev.to/gld5000)):
 
-# Getting Started with Next 13.4
+# Setup Stripe with Next 13.4
 
 ## How I set up a project
 
