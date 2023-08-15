@@ -1,4 +1,4 @@
-# This is a [Next.js](https://nextjs.org/) project with [Stripe Payment GateWay](https://support.stripe.com/topics/getting-started):
+## This is a [Next.js](https://nextjs.org/) project with [Stripe Payment GateWay](https://support.stripe.com/topics/getting-started):
 
 1. [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) for type safety
 2. [Tailwind CSS](https://tailwindcss.com/docs/installation) for styling
@@ -7,34 +7,34 @@
 5. [Prettier](https://prettier.io/docs/en/install.html) for formatting
 6. [Husky](https://typicode.github.io/husky/getting-started.html) & [Lint-Staged](https://github.com/okonet/lint-staged) for pre-commit testing and linting
 
-## If you like this, checkout my other projects on [GitHub](https://github.com/GLD5000) or via my [Portfolio](https://gld-portfolio.vercel.app/)
+### If you like this, checkout my other projects on [GitHub](https://github.com/GLD5000) or via my [Portfolio](https://gld-portfolio.vercel.app/)
 
-## How I made this (also read on [my blog](https://gld-dev-blog.vercel.app/) or [dev.to](https://dev.to/gld5000)):
+### How I made this (also read on [my blog](https://gld-dev-blog.vercel.app/) or [dev.to](https://dev.to/gld5000)):
 
-# Setup Stripe with Next 13.4
+## Setup Stripe with Next 13.4
 
 To set up or better understand the project you can read on!
 
-## Installation
+### Installation
 
 1. Start with a clean Next.js install or my [GLD-NextTemplate](https://github.com/GLD5000/GLD-NextTemplate)
 2. If starting with the [GLD-NextTemplate](https://github.com/GLD5000/GLD-NextTemplate), run `npm i` to set up dependencies etc.
 3. Run `npm i stripe axios` to install stripe and axios (You can also just use the native Fetch API if you like).
 
-## Setup Account on Stripe
+### Setup Account on Stripe
 
 1. Go to [Stripe](https://stripe.com/) and setup an account with your email address (You do not need a credit card or anything as you can just stay in 'test mode').
 2. Copy your secret key from the 'Developers' Tab and put it into a '.env' file in your repos root directory.
 3. Add some products using the 'Products' tab (we will use the API to fetch these for our page).
 
-## Create API route handlers
+### Create API route handlers
 
 You will need two handlers:
 
 1. To fetch products from your Stripe account
 2. To enable checkout for a desired product
 
-### api/getproducts/route.ts:
+#### api/getproducts/route.ts:
 
 ```
 import Stripe from 'stripe';
@@ -58,7 +58,7 @@ export async function GET() {
 
 ```
 
-### api/checkout/route.ts:
+#### api/checkout/route.ts:
 
 ```
 import Stripe from 'stripe';
@@ -91,9 +91,9 @@ export async function POST(request: NextRequest) {
 
 ```
 
-## Integrate getproducts (AKA fetch) API route
+### Integrate getproducts (AKA fetch) API route
 
-### The fetch is be enabled by a useEffect on page / site load:
+#### The fetch is be enabled by a useEffect on page / site load:
 
 ```
     useEffect(() => {
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
     }, []);
 ```
 
-### The fetchProducts function gets an array of products and sets the component state to the result:
+#### The fetchProducts function gets an array of products and sets the component state to the result:
 
 ```
     async function fetchProducts() {
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
 ```
 
-### We map over the returned array, sending each product to a product card:
+#### We map over the returned array, sending each product to a product card:
 
 ```
     function getProductCards(productData: Product[]) {
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     }
 ```
 
-### Then we return the product card array to the page:
+#### Then we return the product card array to the page:
 
 ```
    return (
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
     );
 ```
 
-### I put these parts together in a 'ProductCards.tsx':
+#### I put these parts together in a 'ProductCards.tsx':
 
 ```
 'use client';
@@ -169,16 +169,16 @@ export default function ProductCards() {
 
 ```
 
-## Integrate the checkout API Route
+### Integrate the checkout API Route
 
-### In the product card, there is a button for buying a product:
+#### In the product card, there is a button for buying a product:
 
 ```
   <Button onClick={handleClickBuy}>Buy Now</Button>
 
 ```
 
-### This button has a click handler which makes the API request and gives control of the window location to the Stripe checkout returned:
+#### This button has a click handler which makes the API request and gives control of the window location to the Stripe checkout returned:
 
 ```
     async function handleClickBuy(e: SyntheticEvent) {
@@ -199,7 +199,7 @@ export default function ProductCards() {
 
 ```
 
-### I put these in a ProductCard.tsx component:
+#### I put these in a ProductCard.tsx component:
 
 ```
 import Image from 'next/image';
@@ -254,9 +254,9 @@ export default function ProductCard({ data }: { data: Product }) {
 
 ```
 
-## On Types
+### On Types
 
-### I also decided to destructure the type definitions for 'Product' and 'Price' and export them from my own module so I did not need to keep importing the stripe module and using dot notation to access them (lib/stripe/types.ts):
+#### I also decided to destructure the type definitions for 'Product' and 'Price' and export them from my own module so I did not need to keep importing the stripe module and using dot notation to access them (lib/stripe/types.ts):
 
 ```
 import Stripe from 'stripe';
